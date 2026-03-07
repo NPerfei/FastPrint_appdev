@@ -1,0 +1,25 @@
+FastPrint API
+https://github.com/NPerfei/FastPrint_appdev
+
+PROJECT OVERVIEW
+A FastAPI application designed to handle print order management and cost calculation for a campus printing shop. It will replace the existing manual print order management by providing an API interface that will eliminate the manual process of recording, computing, and tracking print orders and their status.
+This application will process incoming print orders, facilitate the print order status workflow, compute costs automatically, and allow easy access to print records.
+
+PROBLEM STATEMENT
+The campus printing shop currently handles print order management manually. Print orders are written on paper. Of which include details such as customer name, number of pages to print, and type of print. The total cost is also computed manually. As such:
+1. Because of the manual process, more time is spent recording than printing, which also causes delays.
+2. Keeping track of queued, pending, cancelled, and finished print orders is difficult.
+3. There are inaccuracies in total cost computation for print orders.
+4. Incorrect computation results in loss of profit and damage to reputation.
+5. Record backtracking becomes difficult as records grow.
+
+OBJECTIVES
+1. Record printing orders automatically.
+2. Automatically compute the total cost for each printing order.
+3. Update and track printing order status easily.
+4. Access print order(s) information effortlessly.
+
+PRIMARY SYSTEM USERS
+1. Printing Shop Owner - Inputs printing orders and updates status, manages pricing in the system, retrieve single/multiple print order records, and access system reports. 
+2. Printing Shop Custodian - Inputs printing orders and updates status. Can retrieve single/multiple print order records.
+3. Printing Shop Customer - Relays print orders to owner or custodian and pick up finished orders, can also prompt the owner or custodian to cancel unaccepted orders.
