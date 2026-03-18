@@ -1,5 +1,6 @@
 import sqlite3
 from pathlib import Path
+from datetime import timezone, datetime
 
 DB_PATH = Path(__file__).parent.parent / 'fastprint.db'
 
@@ -31,5 +32,10 @@ def init_db():
             updated_at TEXT NOT NULL
         )
     ''')
+    now = datetime.now(timezone.utc).isoformat()
+    cur.execute('''
+        INSERT OR IGNORE INTO pricing (print_type, price_per_page, updated_at)
+        VALUES (?, ?, ?), (?, ?, ?), (?, ?, ?)
+    ''', ('bw', 2, now, 'colored', 5, now, 'photo', 10, now))
     conn.commit()
     conn.close()

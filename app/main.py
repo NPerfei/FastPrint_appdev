@@ -1,13 +1,16 @@
 from fastapi import FastAPI, HTTPException
 from app.models import OrderCreate, Order, OrderUpdateStatus, Pricing, PricingUpdate, OrderStatus
-from app.db import get_connection, init_db
+from app.db import get_connection, init_db, DB_PATH
 from datetime import datetime, timezone
 
 from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def lifespan(app):
-    init_db()
+    if not DB_PATH.is_file():
+        print('Initializing DB...')
+        init_db()
+
     yield
 
 app = FastAPI(lifespan=lifespan)
