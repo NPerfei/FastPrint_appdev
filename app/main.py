@@ -36,7 +36,7 @@ def create_order(order: OrderCreate):
     cur = conn.cursor()
     cur.execute(
         "INSERT INTO orders (customer_name, pages, print_type, cost, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        (order.customer_name, order.pages, order.print_type, cost, OrderStatus.queued.value, now, now)
+        (order.customer_name, order.pages, order.print_type, cost, OrderStatus.pending.value, now, now)
     )
     order_id = cur.lastrowid
     conn.commit()
@@ -62,9 +62,9 @@ def list_orders(status: OrderStatus | None = None):
     conn = get_connection()
     cur = conn.cursor()
     if status:
-        cur.execute("SELECT * FROM orders WHERE status = ? ORDER BY created_at DESC", (status.value,))
+        cur.execute("SELECT * FROM orders WHERE status = ? ORDER BY created_at", (status.value,))
     else:
-        cur.execute("SELECT * FROM orders ORDER BY created_at DESC")
+        cur.execute("SELECT * FROM orders ORDER BY created_at")
     rows = cur.fetchall()
     conn.close()
     return [Order(**row) for row in rows]

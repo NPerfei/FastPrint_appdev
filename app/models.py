@@ -4,8 +4,8 @@ from typing import Optional
 from enum import Enum
 
 class OrderStatus(str, Enum):
-    queued = "queued"
     pending = "pending"
+    queued = "queued"
     cancelled = "cancelled"
     finished = "finished"
 
