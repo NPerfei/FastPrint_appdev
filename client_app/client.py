@@ -7,9 +7,6 @@ import sys
 
 init(autoreset=True)
 
-operation = sys.argv[1]
-arg_list = sys.argv[2:]
-
 price_map = {}
 
 
@@ -73,13 +70,23 @@ def get_print_prices(price_map: dict):
 
 get_print_prices(price_map)
 
-if not price_map:
-    pass
-else:
-    match operation:
-        case 'order': order()
-        case 'view': view_orders()
-        case 'search': search_by_id()
-        case 'viewprices': viewprices()
-        case _:
-            print(Fore.YELLOW + "Available commands are: order, view, search, viewprices.")
+
+try:
+    operation = sys.argv[1]
+    arg_list = sys.argv[2:]
+
+    if not price_map:
+        pass
+    else:
+        match operation:
+            case 'order': order()
+            case 'view': view_orders()
+            case 'search': search_by_id()
+            case 'viewprices': viewprices()
+            case _:
+                print(Fore.YELLOW + "Available commands are: order, view, search, viewprices.")
+
+    if not operation or not arg_list:
+        raise Exception()
+except:
+    print(Fore.YELLOW + "Available commands are: order, view, search, viewprices.")
