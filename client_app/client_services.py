@@ -1,5 +1,6 @@
 from colorama import Fore
 from client_misc import *
+import functools
 
 import requests as req
 
@@ -18,7 +19,7 @@ def handle_requests_errors(func):
         except req.HTTPError as httpe:
             status_code = httpe.response.status_code
             if status_code == 422:
-                show_result('The provided data was invalid', False)
+                show_result('The provided data is invalid.', False)
             elif status_code == 404:
                 show_result('Requested data was not found.', False)
             elif status_code == 500:
@@ -54,16 +55,18 @@ def list_orders(all = False, status: str = "") -> bool:
     return True
 
 @handle_requests_errors
-def get_order(order_id: int): # need to add response status checking for this and also other services
+def get_order(order_id: int, no_return: bool = False):
     r = req.get(server_url + f'/orders/{order_id}')
     if r.status_code != 200: r.raise_for_status()
 
     data = r.json()
     clean_data(data, True)
 
+    if no_return:
+        print(f'{data['customer_name']:<30}| pages: {data['pages']:<9}| type: {data['print_type']:<8}| total: ₱{data['cost']:<9}| status: {data['status']:<10}|')
+        return
     
     return data
-    # print(f'{data['customer_name']:<30}| pages: {data['pages']:<9}| type: {data['print_type']:<8}| total: ₱{data['cost']:<9}| status: {data['status']:<10}|')
     
 @handle_requests_errors
 def get_pricing():
@@ -75,6 +78,7 @@ def get_pricing():
     clean_data(data, True)
     count = 1
     
+    print()
     print(Fore.YELLOW + f"{'Print Prices':=^40}")
     for d in data:
         print(f'[{count}] {d['print_type']:<8}: ₱{d['price_per_page']}\t')

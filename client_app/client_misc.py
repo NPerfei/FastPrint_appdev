@@ -2,7 +2,6 @@ from typing import Any
 from colorama import Fore
 
 import os
-import functools
 
 class NotPositiveNumberError(Exception):
     def __init__(self, message="Must be a positive number.") -> None:
@@ -40,7 +39,7 @@ def question_validate(question: str, is_int=False, is_float=False, validation_li
             if is_int:
                 show_result('Enter a whole number.', False)
             elif is_float:
-                show_result('Enter a real number.', False)
+                show_result('Enter a valid decimal number.', False)
             else:
                 show_result(str(ve), False)
         except NotPositiveNumberError as npne:
